@@ -1,0 +1,8 @@
+fileignoreconfig:
+- filename: src/main/resources/db/migration/V1.1__CreateAccountTable.sql
+  checksum: bd860ade3080df97a6908ca7d406115e534e5e56e78c142f6041f28fa615ba48
+- filename: src/main/resources/db/migration/V1.2__CreateTransactionTable.sql
+  checksum: 27f5b8c2b7bda075db18cd6cd852b0e44966f0f37787d8f08ef52f5faa53907a
+- filename: build.gradle
+  checksum: 5e81c27714bb16daccbf2314a01dddfd2db2b91bdc2ab0ec1b80620202361fd2
+version: ""
