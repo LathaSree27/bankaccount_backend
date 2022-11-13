@@ -5,4 +5,8 @@ fileignoreconfig:
   checksum: 27f5b8c2b7bda075db18cd6cd852b0e44966f0f37787d8f08ef52f5faa53907a
 - filename: build.gradle
   checksum: 5e81c27714bb16daccbf2314a01dddfd2db2b91bdc2ab0ec1b80620202361fd2
+- filename: src/main/resources/application.yml
+  checksum: 1c0d6423dd3b5d0aade16493f4229e5e8a57983bf69098fbeec5132049fbabfe
+- filename: src/main/java/com/bankaccount/bankaccount/model/Account.java
+  checksum: 5fa48ffeb35294bdc88f82585e709f2f6585610487040274b6abf5662a0e5ce2
 version: ""
