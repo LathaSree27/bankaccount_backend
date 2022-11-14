@@ -24,6 +24,10 @@ public class LoginPrincipalService implements UserDetailsService {
         return new LoginPrincipal(account);
     }
 
+    public long getAccountId(String email){
+        Account account = findAccountByEmail(email);
+        return account.getId();
+    }
     private Account findAccountByEmail(String email) {
         return accountRepository.findByEmail(email).orElseThrow(()-> new UsernameNotFoundException("user not found"));
 

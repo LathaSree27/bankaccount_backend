@@ -15,6 +15,7 @@ public class SignupController {
 
     SignupService signupService;
 
+
     @PostMapping("/signup")
     @ResponseStatus(code = HttpStatus.CREATED)
     public void signup(@RequestBody SignupRequest signupRequest) throws IOException, AlreadyExistingUser {
