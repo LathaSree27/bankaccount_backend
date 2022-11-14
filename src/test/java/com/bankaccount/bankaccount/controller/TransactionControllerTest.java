@@ -34,4 +34,16 @@ public class TransactionControllerTest {
 
         verify(transactionService).credit(amount, accountId);
     }
+    @Test
+    void shouldBeAbleToDebitAmount() throws Exception {
+        BigDecimal amount = BigDecimal.valueOf(2);
+        long accountId = 23;
+        TransactionController transactionController = new TransactionController(transactionService,loginPrincipalService);
+        when(principal.getName()).thenReturn("latha@gmail.com");
+        when(loginPrincipalService.getAccountId("latha@gmail.com")).thenReturn(accountId);
+
+        transactionController.debit(principal,amount);
+
+        verify(transactionService).debit(amount, accountId);
+    }
 }

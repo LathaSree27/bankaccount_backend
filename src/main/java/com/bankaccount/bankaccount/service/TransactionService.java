@@ -14,12 +14,21 @@ public class TransactionService{
     TransactionRepository transactionRepository;
     AccountRepository accountRepository;
 
-    public void credit(BigDecimal amount, long accountId) throws Exception {
+    public void credit(BigDecimal amount, long accountId)  {
         Account account = accountRepository.findById(accountId).get();
         Transaction transaction = new Transaction("CREDIT", amount, account);
         transactionRepository.save(transaction);
         System.out.println(account.getBalance());
         account.setBalance(account.getBalance().add(amount));
+        accountRepository.save(account);
+    }
+
+    public void debit(BigDecimal amount, long accountId) {
+        Account account = accountRepository.findById(accountId).get();
+        Transaction transaction = new Transaction("DEBIT", amount, account);
+        transactionRepository.save(transaction);
+        System.out.println(account.getBalance());
+        account.setBalance(account.getBalance().subtract(amount));
         accountRepository.save(account);
     }
 }

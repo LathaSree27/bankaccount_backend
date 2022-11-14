@@ -69,4 +69,17 @@ public class TransactionControllerIntegrationTest {
                         .param("amount", String.valueOf(new BigDecimal(4))))
                         .andExpect(status().isCreated());
     }
+    @Test
+    void shouldBeAbleToDebitAmount() throws Exception {
+        String uri = "/transaction/debit";
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        Account account = new Account("subha", "krisha@gmail.com", bCryptPasswordEncoder.encode("subha@12345"));
+        accountRepository.save(account);
+
+        mockMvc.perform(post(uri)
+                        .with(httpBasic("krisha@gmail.com","subha@12345"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param("amount", String.valueOf(new BigDecimal(4))))
+                .andExpect(status().isCreated());
+    }
 }

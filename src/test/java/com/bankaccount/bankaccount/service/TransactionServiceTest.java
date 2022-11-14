@@ -36,4 +36,16 @@ public class TransactionServiceTest {
         verify(transactionRepository).save(any());
         verify(accountRepository).save(account);
     }
+    @Test
+    void shouldBeAbleToSaveDebitedAmount() throws Exception {
+        BigDecimal amount = BigDecimal.valueOf(4);
+        Long accountId = 2L;
+        Account account = new Account("latha","latha@gmail.com","latha@123");
+        when(accountRepository.findById(accountId)).thenReturn(Optional.of(account));
+
+        transactionService.debit(amount,accountId);
+
+        verify(transactionRepository).save(any());
+        verify(accountRepository).save(account);
+    }
 }

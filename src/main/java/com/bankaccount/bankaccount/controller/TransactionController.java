@@ -22,4 +22,11 @@ public class TransactionController {
         long accountId = loginPrincipalService.getAccountId(email);
         transactionService.credit(amount,accountId);
     }
+    @PostMapping("/debit")
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public void debit(Principal principal, @RequestParam(value = "amount") BigDecimal amount) throws Exception {
+        String email = principal.getName();
+        long accountId = loginPrincipalService.getAccountId(email);
+        transactionService.debit(amount,accountId);
+    }
 }
