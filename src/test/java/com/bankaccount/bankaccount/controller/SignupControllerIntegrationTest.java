@@ -41,7 +41,7 @@ public class SignupControllerIntegrationTest {
     }
 
     @Test
-    void shouldBeAbleToInvokeSignUpMethod() throws Exception {
+    void shouldBeAbleToSignUp() throws Exception {
         String uri = "/signup";
         SignupRequest signupRequest = new SignupRequest("latha", "latha@gmail.com", "latha@123");
         String requestJson = new ObjectMapper().writeValueAsString(signupRequest);
@@ -53,7 +53,7 @@ public class SignupControllerIntegrationTest {
     }
 
     @Test
-    void shouldThrowUserAlreadyRegisteredWithThisEmailIdExceptionWhenExistingEmailIdIsProvided() throws Exception {
+    void shouldThrowErrorWhenExistingEmailIdIsProvidedForSignup() throws Exception {
 
         String uri = "/signup";
         Account account = new Account("Latha","mouna@gmail.com","latha@123");
