@@ -27,7 +27,6 @@ public class LoginControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
-
     @Autowired
     AccountRepository accountRepository;
 
@@ -35,7 +34,6 @@ public class LoginControllerIntegrationTest {
     public void beforeEach(){
         accountRepository.deleteAll();
     }
-
     @AfterEach
     public void afterEach(){
         accountRepository.deleteAll();
@@ -48,8 +46,7 @@ public class LoginControllerIntegrationTest {
         accountRepository.save(account);
 
         mockMvc.perform(get("/login")
-                .with(httpBasic("mon@gmail.com","latha@123"))
-                )
+                .with(httpBasic("mon@gmail.com","latha@123")))
                 .andExpect(status().isOk());
     }
     @Test
