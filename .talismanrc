@@ -22,6 +22,10 @@ fileignoreconfig:
 - filename: src/test/java/com/bankaccount/bankaccount/controller/TransactionControllerIntegrationTest.java
   checksum: 9aa06087e7a85f37baebb282353df63dcee772a3b7d73c090cbff026ff349016
 version: ""
+fileignoreconfig:
+- filename: src/test/java/com/bankaccount/bankaccount/controller/AccountControllerInetgrationTest.java
+  checksum: 1cdfe65d4182f0f62d72b6cfce996dc3944f69e383185bb71166b6dbf96fb95b
+version: ""
 
 
 
