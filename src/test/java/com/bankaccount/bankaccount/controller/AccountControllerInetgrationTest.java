@@ -42,7 +42,7 @@ public class AccountControllerInetgrationTest {
     }
 
     @Test
-    void shouldBeAbleToGetAccountSummary() throws Exception {
+    void shouldBeAbleToFetchAccountDetails() throws Exception {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         Account account = new Account("latha", "mon@gmail.com", bCryptPasswordEncoder.encode( "latha@123"));
         accountRepository.save(account);

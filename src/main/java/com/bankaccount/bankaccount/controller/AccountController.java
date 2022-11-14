@@ -1,32 +1,21 @@
 package com.bankaccount.bankaccount.controller;
 
-import com.bankaccount.bankaccount.model.Account;
-import com.bankaccount.bankaccount.repo.AccountRepository;
-import com.bankaccount.bankaccount.service.LoginPrincipalService;
+import com.bankaccount.bankaccount.service.AccountService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.security.Principal;
-import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 @AllArgsConstructor
 public class AccountController {
-    AccountRepository accountRepository;
+    AccountService accountService;
 
     @GetMapping("/summary")
-    public Map<String,String > summary(Principal principal){
-        Map<String, String> summaryResponse = new HashMap<>();
+    public Map<String,String> summary(Principal principal){
         String email = principal.getName();
-        Account account = accountRepository.findByEmail(email).get();
-        summaryResponse.put("Account Number", String.valueOf(account.getId()));
-        summaryResponse.put("Account Holder Name",account.getName());
-        summaryResponse.put("Balance", String.valueOf(account.getBalance()));
-
+        Map<String, String> summaryResponse = accountService.getSummary(email);
         return summaryResponse;
-
-
     }
 }
