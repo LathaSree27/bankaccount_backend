@@ -9,4 +9,9 @@ fileignoreconfig:
   checksum: 1c0d6423dd3b5d0aade16493f4229e5e8a57983bf69098fbeec5132049fbabfe
 - filename: src/main/java/com/bankaccount/bankaccount/model/Account.java
   checksum: 5fa48ffeb35294bdc88f82585e709f2f6585610487040274b6abf5662a0e5ce2
+- filename: src/main/java/com/bankaccount/bankaccount/service/SignupService.java
+  checksum: da58ee08b860c63264d60be49693c58447e11b59b7e5e224646306738955b172
+- filename: src/test/java/com/bankaccount/bankaccount/controller/LoginControllerIntegrationTest.java
+  checksum: cf74bbd63f532e040bf05299d498aac42c34620bdf9a2658343ad90c8f51ddb3
 version: ""
+
