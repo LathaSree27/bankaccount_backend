@@ -6,6 +6,7 @@ import com.bankaccount.bankaccount.service.SignupService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
 import java.io.IOException;
 
 @RestController
@@ -14,7 +15,6 @@ import java.io.IOException;
 public class SignupController {
 
     SignupService signupService;
-
 
     @PostMapping("/signup")
     @ResponseStatus(code = HttpStatus.CREATED)

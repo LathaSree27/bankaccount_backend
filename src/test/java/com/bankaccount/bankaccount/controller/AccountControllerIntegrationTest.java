@@ -3,7 +3,6 @@ package com.bankaccount.bankaccount.controller;
 import com.bankaccount.bankaccount.BankaccountApplication;
 import com.bankaccount.bankaccount.model.Account;
 import com.bankaccount.bankaccount.repo.AccountRepository;
-import org.aspectj.lang.annotation.After;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @WithMockUser
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
-public class AccountControllerInetgrationTest {
+public class AccountControllerIntegrationTest {
     @Autowired
     MockMvc mockMvc;
 
@@ -32,24 +31,23 @@ public class AccountControllerInetgrationTest {
     AccountRepository accountRepository;
 
     @BeforeEach
-    public void beforeEach(){
+    public void beforeEach() {
         accountRepository.deleteAll();
     }
 
     @AfterEach
-    public void afterEach(){
+    public void afterEach() {
         accountRepository.deleteAll();
     }
 
     @Test
     void shouldBeAbleToFetchAccountDetails() throws Exception {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        Account account = new Account("latha", "mon@gmail.com", bCryptPasswordEncoder.encode( "latha@123"));
+        Account account = new Account("latha", "mon@gmail.com", bCryptPasswordEncoder.encode("latha@123"));
         accountRepository.save(account);
 
         mockMvc.perform(get("/summary")
-                        .with(httpBasic("mon@gmail.com","latha@123"))
-                )
+                        .with(httpBasic("mon@gmail.com", "latha@123")))
                 .andExpect(status().isOk());
     }
 

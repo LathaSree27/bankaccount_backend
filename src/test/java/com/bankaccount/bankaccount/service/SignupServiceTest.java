@@ -6,7 +6,9 @@ import com.bankaccount.bankaccount.model.Account;
 import com.bankaccount.bankaccount.repo.AccountRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
@@ -16,9 +18,9 @@ public class SignupServiceTest {
     SignupService signupService;
 
     @BeforeEach
-    public void beforeEach(){
+    public void beforeEach() {
         accountRepository = mock(AccountRepository.class);
-        signupService = new SignupService (accountRepository);
+        signupService = new SignupService(accountRepository);
     }
 
     @Test
@@ -37,7 +39,7 @@ public class SignupServiceTest {
         Account account = new Account(signupRequest);
         when(accountRepository.findByEmail(signupRequest.getEmail())).thenReturn(Optional.of(account));
 
-        assertThrows(AlreadyExistingUser.class ,()->  signupService.save(signupRequest));
+        assertThrows(AlreadyExistingUser.class, () -> signupService.save(signupRequest));
 
 
     }

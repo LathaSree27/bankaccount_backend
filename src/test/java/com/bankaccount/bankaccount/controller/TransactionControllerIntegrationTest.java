@@ -1,12 +1,9 @@
 package com.bankaccount.bankaccount.controller;
 
 import com.bankaccount.bankaccount.BankaccountApplication;
-import com.bankaccount.bankaccount.controller.request.SignupRequest;
 import com.bankaccount.bankaccount.model.Account;
-import com.bankaccount.bankaccount.model.Transaction;
 import com.bankaccount.bankaccount.repo.AccountRepository;
 import com.bankaccount.bankaccount.repo.TransactionRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,7 +20,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.math.BigDecimal;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -43,14 +39,14 @@ public class TransactionControllerIntegrationTest {
     AccountRepository accountRepository;
 
     @BeforeEach
-    public void beforeEach()
-    {
+    public void beforeEach() {
         transactionRepository.deleteAll();
         accountRepository.deleteAll();
 
     }
+
     @AfterEach
-    public void afterEach(){
+    public void afterEach() {
         transactionRepository.deleteAll();
         accountRepository.deleteAll();
 
@@ -64,11 +60,12 @@ public class TransactionControllerIntegrationTest {
         accountRepository.save(account);
 
         mockMvc.perform(post(uri)
-                        .with(httpBasic("krisha@gmail.com","subha@12345"))
+                        .with(httpBasic("krisha@gmail.com", "subha@12345"))
                         .contentType(MediaType.APPLICATION_JSON)
                         .param("amount", String.valueOf(new BigDecimal(4))))
-                        .andExpect(status().isCreated());
+                .andExpect(status().isCreated());
     }
+
     @Test
     void shouldBeAbleToDebitAmount() throws Exception {
         String uri = "/transaction/debit";
@@ -77,7 +74,7 @@ public class TransactionControllerIntegrationTest {
         accountRepository.save(account);
 
         mockMvc.perform(post(uri)
-                        .with(httpBasic("krisha@gmail.com","subha@12345"))
+                        .with(httpBasic("krisha@gmail.com", "subha@12345"))
                         .contentType(MediaType.APPLICATION_JSON)
                         .param("amount", String.valueOf(new BigDecimal(4))))
                 .andExpect(status().isCreated());

@@ -20,10 +20,10 @@ public class SignupService {
         String givenEmail = signupRequest.getEmail();
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         Optional<Account> byEmail = accountRepository.findByEmail(givenEmail);
-        if(byEmail.isPresent()){
+        if (byEmail.isPresent()) {
             throw new AlreadyExistingUser();
         }
-        Account account = new Account(signupRequest.getName(),signupRequest.getEmail(),bCryptPasswordEncoder.encode(signupRequest.getPassword()));
+        Account account = new Account(signupRequest.getName(), signupRequest.getEmail(), bCryptPasswordEncoder.encode(signupRequest.getPassword()));
         accountRepository.save(account);
     }
 }

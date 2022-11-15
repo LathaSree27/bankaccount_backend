@@ -4,7 +4,9 @@ import com.bankaccount.bankaccount.model.Account;
 import com.bankaccount.bankaccount.repo.AccountRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.util.Optional;
+
 import static org.mockito.Mockito.*;
 
 public class AccountServiceTest {
@@ -12,7 +14,7 @@ public class AccountServiceTest {
     AccountRepository accountRepository;
 
     @BeforeEach
-    public void beforeEach(){
+    public void beforeEach() {
         accountRepository = mock(AccountRepository.class);
     }
 

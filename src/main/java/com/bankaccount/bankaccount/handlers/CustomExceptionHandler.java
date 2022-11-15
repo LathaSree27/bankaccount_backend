@@ -10,8 +10,10 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import com.bankaccount.bankaccount.exception.AlreadyExistingUser;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -30,6 +32,6 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(AlreadyExistingUser.class)
     public ResponseEntity handleAlreadyExistingUser(AlreadyExistingUser ex) {
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 }

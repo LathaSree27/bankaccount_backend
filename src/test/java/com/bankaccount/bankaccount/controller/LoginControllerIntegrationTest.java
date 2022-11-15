@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -31,29 +32,31 @@ public class LoginControllerIntegrationTest {
     AccountRepository accountRepository;
 
     @BeforeEach
-    public void beforeEach(){
+    public void beforeEach() {
         accountRepository.deleteAll();
     }
+
     @AfterEach
-    public void afterEach(){
+    public void afterEach() {
         accountRepository.deleteAll();
     }
 
     @Test
     void shouldBeAbleToLoginSuccessfully() throws Exception {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        Account account = new Account("latha", "mon@gmail.com", bCryptPasswordEncoder.encode( "latha@123"));
+        Account account = new Account("latha", "mon@gmail.com", bCryptPasswordEncoder.encode("latha@123"));
         accountRepository.save(account);
 
         mockMvc.perform(get("/login")
-                .with(httpBasic("mon@gmail.com","latha@123")))
+                        .with(httpBasic("mon@gmail.com", "latha@123")))
                 .andExpect(status().isOk());
     }
+
     @Test
     void shouldThrowErrorWhenInvalidCredentialsAreProvided() throws Exception {
 
         mockMvc.perform(get("/login")
-                        .with(httpBasic("mon@gmail.com","latha@123")))
-                        .andExpect(status().isUnauthorized());
+                        .with(httpBasic("mon@gmail.com", "latha@123")))
+                .andExpect(status().isUnauthorized());
     }
 }

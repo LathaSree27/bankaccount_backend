@@ -4,8 +4,10 @@ import com.bankaccount.bankaccount.service.LoginPrincipalService;
 import com.bankaccount.bankaccount.service.TransactionService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.math.BigDecimal;
 import java.security.Principal;
+
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.*;
 
@@ -16,34 +18,32 @@ public class TransactionControllerTest {
     Principal principal;
 
     @BeforeEach
-    public void beforeEach(){
+    public void beforeEach() {
         transactionService = mock(TransactionService.class);
-        loginPrincipalService =  mock(LoginPrincipalService.class);
         principal = mock(Principal.class);
     }
 
     @Test
     void shouldBeAbleToCreditAmount() throws Exception {
         BigDecimal amount = BigDecimal.valueOf(2);
-        long accountId = 23;
-        TransactionController transactionController = new TransactionController(transactionService,loginPrincipalService);
-        when(principal.getName()).thenReturn("latha@gmail.com");
-        when(loginPrincipalService.getAccountId("latha@gmail.com")).thenReturn(accountId);
+        TransactionController transactionController = new TransactionController(transactionService);
+        String email = "latha@gmail.com";
+        when(principal.getName()).thenReturn(email);
 
-        transactionController.credit(principal,amount);
+        transactionController.credit(principal, amount);
 
-        verify(transactionService).credit(amount, accountId);
+        verify(transactionService).credit(amount, email);
     }
+
     @Test
     void shouldBeAbleToDebitAmount() throws Exception {
         BigDecimal amount = BigDecimal.valueOf(2);
-        long accountId = 23;
-        TransactionController transactionController = new TransactionController(transactionService,loginPrincipalService);
-        when(principal.getName()).thenReturn("latha@gmail.com");
-        when(loginPrincipalService.getAccountId("latha@gmail.com")).thenReturn(accountId);
+        TransactionController transactionController = new TransactionController(transactionService);
+        String email = "latha@gmail.com";
+        when(principal.getName()).thenReturn(email);
 
-        transactionController.debit(principal,amount);
+        transactionController.debit(principal, amount);
 
-        verify(transactionService).debit(amount, accountId);
+        verify(transactionService).debit(amount, email);
     }
 }
