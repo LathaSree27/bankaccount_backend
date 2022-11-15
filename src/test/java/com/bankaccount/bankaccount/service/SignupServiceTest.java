@@ -26,7 +26,6 @@ public class SignupServiceTest {
     @Test
     void shouldBeAbleToSaveAccountDetailsWhenNewUserTriesToSignup() throws AlreadyExistingUser {
         SignupRequest signupRequest = new SignupRequest("latha", "latha@gmail.com", "Latha@123");
-        Account account = new Account(signupRequest);
 
         signupService.save(signupRequest);
 
@@ -40,8 +39,5 @@ public class SignupServiceTest {
         when(accountRepository.findByEmail(signupRequest.getEmail())).thenReturn(Optional.of(account));
 
         assertThrows(AlreadyExistingUser.class, () -> signupService.save(signupRequest));
-
-
     }
-
 }

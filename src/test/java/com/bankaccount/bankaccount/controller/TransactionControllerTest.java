@@ -46,4 +46,15 @@ public class TransactionControllerTest {
 
         verify(transactionService).debit(amount, email);
     }
+
+    @Test
+    void shouldBeAbleToFetchStatement() {
+        String email = "latha@gmail.com";
+        TransactionController transactionController = new TransactionController(transactionService);
+        when(principal.getName()).thenReturn(email);
+
+        transactionController.statement(principal);
+
+        verify(transactionService).statement(email);
+    }
 }

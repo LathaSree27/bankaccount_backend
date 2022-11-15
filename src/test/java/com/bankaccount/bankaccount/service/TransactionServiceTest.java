@@ -1,15 +1,22 @@
 package com.bankaccount.bankaccount.service;
 
+import com.bankaccount.bankaccount.controller.response.TransactionResponse;
+import com.bankaccount.bankaccount.controller.response.TransactionStatement;
 import com.bankaccount.bankaccount.model.Account;
+import com.bankaccount.bankaccount.model.Transaction;
 import com.bankaccount.bankaccount.repo.AccountRepository;
 import com.bankaccount.bankaccount.repo.TransactionRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.*;
 
 public class TransactionServiceTest {
@@ -18,15 +25,21 @@ public class TransactionServiceTest {
     AccountRepository accountRepository;
     TransactionService transactionService;
 
+    TransactionStatement transactionStatement;
+
+    TransactionResponse transactionResponse;
+
     @BeforeEach
     public void beforeEach() {
         transactionRepository = mock(TransactionRepository.class);
         accountRepository = mock(AccountRepository.class);
+        transactionResponse = mock(TransactionResponse.class);
+        transactionStatement = mock(TransactionStatement.class);
         transactionService = new TransactionService(transactionRepository, accountRepository);
     }
 
     @Test
-    void shouldBeAbleToSaveCreditedAmount() throws Exception {
+    void shouldBeAbleToSaveCreditedAmount() {
         BigDecimal amount = BigDecimal.valueOf(4);
         String email = "latha@gmail.com";
         Account account = new Account("latha", email, "latha@123");
@@ -40,7 +53,7 @@ public class TransactionServiceTest {
     }
 
     @Test
-    void shouldBeAbleToSaveDebitedAmount() throws Exception {
+    void shouldBeAbleToSaveDebitedAmount() {
         BigDecimal amount = BigDecimal.valueOf(4);
         String email = "latha@gmail.com";
         Account account = new Account("latha", email, "latha@123");
@@ -51,5 +64,27 @@ public class TransactionServiceTest {
         assertEquals(new BigDecimal(-4), account.getBalance());
         verify(transactionRepository).save(any());
         verify(accountRepository).save(account);
+    }
+
+    @Test
+    void shouldBeAbleToFetchTransactions() {
+        String email = "latha@gmail.com";
+        Account account = new Account("latha", email, "latha@123");
+        when(accountRepository.findByEmail(email)).thenReturn(Optional.of(account));
+        long accountId = account.getId();
+        List<Transaction> transactions = new ArrayList<>();
+        transactions.add(new Transaction("CREDIT",new BigDecimal(10),account));
+        transactions.add(new Transaction("DEBIT",new BigDecimal(5),account));
+        when(transactionRepository.findByAccount_id(accountId)).thenReturn(transactions);
+        List<TransactionResponse> transactionResponses = new ArrayList<>();
+        for(Transaction transaction : transactions){
+            transactionResponses.add(new TransactionResponse(transaction.getType(),transaction.getAmount()));
+        }
+        TransactionStatement transactionStatement = new TransactionStatement(accountId, account.getName(), transactionResponses, account.getBalance());
+
+        TransactionStatement statement = transactionService.statement(email);
+
+        assertThat(transactionStatement,is(statement));
+        verify(transactionRepository).findByAccount_id(accountId);
     }
 }
