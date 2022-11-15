@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class LoginPrincipalService implements UserDetailsService {
-    @Autowired
     private final AccountRepository accountRepository;
 
     public LoginPrincipalService(AccountRepository accountRepository) {
