@@ -15,8 +15,6 @@ public class AccountController {
 
     @GetMapping("/summary")
     public Map<String, String> summary(Principal principal) {
-        String email = principal.getName();
-        Map<String, String> summaryResponse = accountService.getSummary(email);
-        return summaryResponse;
+        return accountService.getSummary(principal.getName());
     }
 }

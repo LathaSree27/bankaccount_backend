@@ -13,7 +13,6 @@ import java.io.IOException;
 @RequestMapping
 @AllArgsConstructor
 public class SignupController {
-
     SignupService signupService;
 
     @PostMapping("/signup")

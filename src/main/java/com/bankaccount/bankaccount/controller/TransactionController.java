@@ -18,19 +18,17 @@ public class TransactionController {
     @PostMapping("/credit")
     @ResponseStatus(code = HttpStatus.CREATED)
     public void credit(Principal principal, @RequestParam(value = "amount") BigDecimal amount) throws Exception {
-        String email = principal.getName();
-        transactionService.credit(amount, email);
+        transactionService.credit(amount, principal.getName());
     }
 
     @PostMapping("/debit")
     @ResponseStatus(code = HttpStatus.CREATED)
     public void debit(Principal principal, @RequestParam(value = "amount") BigDecimal amount) throws Exception {
-        String email = principal.getName();
-        transactionService.debit(amount, email);
+        transactionService.debit(amount, principal.getName());
     }
+
     @GetMapping("/statement")
-    public TransactionStatement statement(Principal principal){
-        String email = principal.getName();
-        return transactionService.statement(email);
+    public TransactionStatement statement(Principal principal) {
+        return transactionService.statement(principal.getName());
     }
 }

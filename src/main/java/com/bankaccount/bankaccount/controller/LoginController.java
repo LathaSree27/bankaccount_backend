@@ -13,10 +13,8 @@ import java.util.Map;
 public class LoginController {
     @GetMapping("/login")
     public Map<String, Object> login(Principal principal) {
-        String email = principal.getName();
         Map<String, Object> userDetails = new HashMap<>();
-        userDetails.put("email", email);
+        userDetails.put("email", principal.getName());
         return userDetails;
-
     }
 }
