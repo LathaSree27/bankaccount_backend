@@ -28,18 +28,14 @@ public class TransactionServiceTest {
     TransactionRepository transactionRepository;
     @Mock
     AccountRepository accountRepository;
-    @Mock
-    TransactionStatement transactionStatement;
-    @Mock
-    TransactionResponse transactionResponse;
     @InjectMocks
     TransactionService transactionService;
 
     @Test
-    void shouldBeAbleToSaveCreditedAmount() {
+    void shouldBeAbleToCreditAmountIntoLoggedInUserAccount() {
         BigDecimal amount = BigDecimal.valueOf(4);
-        String email = "latha@gmail.com";
-        Account account = new Account("latha", email, "latha@123");
+        String email = "abc@gmail.com";
+        Account account = new Account("abc", email, "abc@123");
         when(accountRepository.findByEmail(email)).thenReturn(Optional.of(account));
 
         transactionService.credit(amount, email);
@@ -50,10 +46,10 @@ public class TransactionServiceTest {
     }
 
     @Test
-    void shouldBeAbleToSaveDebitedAmount() {
+    void shouldBeAbleToDebitAmountFromLoggedInUserAccount() {
         BigDecimal amount = BigDecimal.valueOf(4);
-        String email = "latha@gmail.com";
-        Account account = new Account("latha", email, "latha@123");
+        String email = "abc@gmail.com";
+        Account account = new Account("abc", email, "abc@123");
         when(accountRepository.findByEmail(email)).thenReturn(Optional.of(account));
 
         transactionService.debit(amount, email);
@@ -64,9 +60,9 @@ public class TransactionServiceTest {
     }
 
     @Test
-    void shouldBeAbleToFetchTransactions() {
-        String email = "latha@gmail.com";
-        Account account = new Account("latha", email, "latha@123");
+    void shouldBeAbleToFetchStatementOfTheLoggedInUser() {
+        String email = "abc@gmail.com";
+        Account account = new Account("abc", email, "abc@123");
         when(accountRepository.findByEmail(email)).thenReturn(Optional.of(account));
         long accountId = account.getId();
         List<Transaction> transactions = new ArrayList<>();

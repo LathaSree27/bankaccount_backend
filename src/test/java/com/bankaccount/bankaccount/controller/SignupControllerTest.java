@@ -17,18 +17,15 @@ import static org.mockito.Mockito.verify;
 public class SignupControllerTest {
     @Mock
     SignupService signupService;
-
     @InjectMocks
     SignupController signupController;
 
-
     @Test
     void shouldBeAbleToSignupCustomer() throws IOException, AlreadyExistingUser {
-        SignupRequest signupRequest = new SignupRequest("latha", "latha@gmail.com", "Latha@123");
+        SignupRequest signupRequest = new SignupRequest("abc", "abc@gmail.com", "abc@123");
 
         signupController.signup(signupRequest);
 
         verify(signupService).save(signupRequest);
-
     }
 }

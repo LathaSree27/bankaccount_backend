@@ -23,8 +23,8 @@ public class SignupServiceTest {
     SignupService signupService;
 
     @Test
-    void shouldBeAbleToSaveAccountDetailsWhenNewUserTriesToSignup() throws AlreadyExistingUser {
-        SignupRequest signupRequest = new SignupRequest("latha", "latha@gmail.com", "Latha@123");
+    void shouldBeAbleToSaveAccountDetailsWhenNewUserSignsUp() throws AlreadyExistingUser {
+        SignupRequest signupRequest = new SignupRequest("abc", "abc@gmail.com", "abc@123");
 
         signupService.save(signupRequest);
 
@@ -32,8 +32,8 @@ public class SignupServiceTest {
     }
 
     @Test
-    void shouldNotBeAbleToSaveAccountDetailsWhenExistingUserTriesToSignup() {
-        SignupRequest signupRequest = new SignupRequest("latha", "latha@gmail.com", "Latha@123");
+    void shouldThrowAlreadyExistingUserExceptionWhenExistingUserTriesToSignup() {
+        SignupRequest signupRequest = new SignupRequest("abc", "abc@gmail.com", "abc@123");
         Account account = new Account(signupRequest);
         when(accountRepository.findByEmail(signupRequest.getEmail())).thenReturn(Optional.of(account));
 

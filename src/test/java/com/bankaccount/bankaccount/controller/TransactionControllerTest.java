@@ -1,8 +1,7 @@
 package com.bankaccount.bankaccount.controller;
 
-import com.bankaccount.bankaccount.service.LoginPrincipalService;
+import com.bankaccount.bankaccount.controller.response.TransactionStatement;
 import com.bankaccount.bankaccount.service.TransactionService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -12,8 +11,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.math.BigDecimal;
 import java.security.Principal;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class TransactionControllerTest {
@@ -26,34 +27,30 @@ public class TransactionControllerTest {
     TransactionController transactionController;
 
     @Test
-    void shouldBeAbleToCreditAmount() throws Exception {
+    void shouldBeAbleToCreditAmountIntoLoggedInUserAccount() throws Exception {
         BigDecimal amount = BigDecimal.valueOf(2);
-        String email = "latha@gmail.com";
-        when(principal.getName()).thenReturn(email);
 
         transactionController.credit(principal, amount);
 
-        verify(transactionService).credit(amount, email);
+        verify(transactionService).credit(amount, principal.getName());
     }
 
     @Test
-    void shouldBeAbleToDebitAmount() throws Exception {
+    void shouldBeAbleToDebitAmountFromLoggedInUserAccount() throws Exception {
         BigDecimal amount = BigDecimal.valueOf(2);
-        String email = "latha@gmail.com";
-        when(principal.getName()).thenReturn(email);
 
         transactionController.debit(principal, amount);
 
-        verify(transactionService).debit(amount, email);
+        verify(transactionService).debit(amount, principal.getName());
     }
 
     @Test
-    void shouldBeAbleToFetchStatement() {
-        String email = "latha@gmail.com";
-        when(principal.getName()).thenReturn(email);
+    void shouldBeAbleToFetchStatementOfTheLoggedInUser() {
+        TransactionStatement expectedTransactionStatement = TransactionStatement.builder().build();
+        when(transactionService.statement(principal.getName())).thenReturn(expectedTransactionStatement);
+        TransactionStatement actualTransactionResponse = transactionController.statement(principal);
 
-        transactionController.statement(principal);
-
-        verify(transactionService).statement(email);
+        verify(transactionService).statement(principal.getName());
+        assertThat(actualTransactionResponse, is(expectedTransactionStatement));
     }
 }

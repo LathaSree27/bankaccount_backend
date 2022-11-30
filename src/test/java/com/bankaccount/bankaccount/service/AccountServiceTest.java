@@ -26,9 +26,9 @@ public class AccountServiceTest {
     AccountService accountService;
 
     @Test
-    void shouldBeAbleToGetAccountDetails() {
-        String email = "latha@gmail.com";
-        Account account = new Account("latha", email, "Latha@123");
+    void shouldBeAbleToFetchAccountSummaryOfLoggedInUser() {
+        String email = "abc@gmail.com";
+        Account account = new Account("abc", email, "abc@123");
         when(accountRepository.findByEmail(email)).thenReturn(Optional.of(account));
         Map<String, String> expectedSummary = new HashMap<>();
         expectedSummary.put("Account Number", String.valueOf(account.getId()));
