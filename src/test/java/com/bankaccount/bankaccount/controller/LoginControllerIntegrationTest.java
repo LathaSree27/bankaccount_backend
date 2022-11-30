@@ -44,11 +44,11 @@ public class LoginControllerIntegrationTest {
     @Test
     void shouldBeAbleToLoginSuccessfully() throws Exception {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        Account account = new Account("latha", "mon@gmail.com", bCryptPasswordEncoder.encode("latha@123"));
+        Account account = new Account("abc", "abc@gmail.com", bCryptPasswordEncoder.encode("abc@123"));
         accountRepository.save(account);
 
         mockMvc.perform(get("/login")
-                        .with(httpBasic("mon@gmail.com", "latha@123")))
+                        .with(httpBasic(account.getEmail(), "abc@123")))
                 .andExpect(status().isOk());
     }
 
@@ -56,7 +56,7 @@ public class LoginControllerIntegrationTest {
     void shouldThrowErrorWhenInvalidCredentialsAreProvided() throws Exception {
 
         mockMvc.perform(get("/login")
-                        .with(httpBasic("mon@gmail.com", "latha@123")))
+                        .with(httpBasic("abc@gmail.com", "abc@123")))
                 .andExpect(status().isUnauthorized());
     }
 }

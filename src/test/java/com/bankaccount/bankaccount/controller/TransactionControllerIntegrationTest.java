@@ -20,7 +20,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.math.BigDecimal;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(classes = BankaccountApplication.class)
@@ -53,28 +54,28 @@ public class TransactionControllerIntegrationTest {
     }
 
     @Test
-    void shouldBeAbleToCreditAmount() throws Exception {
+    void shouldBeAbleToCreditAmountIntoLoggedInUserAccount() throws Exception {
         String uri = "/transaction/credit";
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        Account account = new Account("subha", "krisha@gmail.com", bCryptPasswordEncoder.encode("subha@12345"));
+        Account account = new Account("abc", "abc@gmail.com", bCryptPasswordEncoder.encode("abc@12345"));
         accountRepository.save(account);
 
         mockMvc.perform(post(uri)
-                        .with(httpBasic("krisha@gmail.com", "subha@12345"))
+                        .with(httpBasic(account.getEmail(), "abc@12345"))
                         .contentType(MediaType.APPLICATION_JSON)
                         .param("amount", String.valueOf(new BigDecimal(4))))
                 .andExpect(status().isCreated());
     }
 
     @Test
-    void shouldBeAbleToDebitAmount() throws Exception {
+    void shouldBeAbleToDebitAmountFromLoggedInUserAccount() throws Exception {
         String uri = "/transaction/debit";
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        Account account = new Account("subha", "krisha@gmail.com", bCryptPasswordEncoder.encode("subha@12345"));
+        Account account = new Account("abc", "abc@gmail.com", bCryptPasswordEncoder.encode("abc@12345"));
         accountRepository.save(account);
 
         mockMvc.perform(post(uri)
-                        .with(httpBasic("krisha@gmail.com", "subha@12345"))
+                        .with(httpBasic(account.getEmail(), "abc@12345"))
                         .contentType(MediaType.APPLICATION_JSON)
                         .param("amount", String.valueOf(new BigDecimal(4))))
                 .andExpect(status().isCreated());
@@ -84,11 +85,11 @@ public class TransactionControllerIntegrationTest {
     void shouldBeAbleToFetchTransactionStatement() throws Exception {
         String uri = "/transaction/statement";
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        Account account = new Account("subha", "krisha@gmail.com", bCryptPasswordEncoder.encode("subha@12345"));
+        Account account = new Account("abc", "abc@gmail.com", bCryptPasswordEncoder.encode("abc@12345"));
         accountRepository.save(account);
 
         mockMvc.perform(get(uri)
-                        .with(httpBasic("krisha@gmail.com", "subha@12345")))
-                        .andExpect(status().isOk());
+                        .with(httpBasic(account.getEmail(), "abc@12345")))
+                .andExpect(status().isOk());
     }
 }

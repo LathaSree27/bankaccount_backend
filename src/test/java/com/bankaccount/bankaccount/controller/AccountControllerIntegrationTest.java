@@ -41,13 +41,13 @@ public class AccountControllerIntegrationTest {
     }
 
     @Test
-    void shouldBeAbleToFetchAccountDetails() throws Exception {
+    void shouldBeAbleToFetchAccountSummaryOfLoggedInUser() throws Exception {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        Account account = new Account("latha", "mon@gmail.com", bCryptPasswordEncoder.encode("latha@123"));
+        Account account = new Account("abc", "abc@gmail.com", bCryptPasswordEncoder.encode("abc@123"));
         accountRepository.save(account);
 
         mockMvc.perform(get("/summary")
-                        .with(httpBasic("mon@gmail.com", "latha@123")))
+                        .with(httpBasic(account.getEmail(), "abc@123")))
                 .andExpect(status().isOk());
     }
 

@@ -16,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -31,19 +32,19 @@ public class SignupControllerIntegrationTest {
     private AccountRepository accountRepository;
 
     @BeforeEach
-    public void beforeEach(){
+    public void beforeEach() {
         accountRepository.deleteAll();
     }
 
     @AfterEach
-    public void afterEach(){
+    public void afterEach() {
         accountRepository.deleteAll();
     }
 
     @Test
     void shouldBeAbleToSignUp() throws Exception {
         String uri = "/signup";
-        SignupRequest signupRequest = new SignupRequest("latha", "latha@gmail.com", "latha@123");
+        SignupRequest signupRequest = new SignupRequest("abc", "abc@gmail.com", "abc@123");
         String requestJson = new ObjectMapper().writeValueAsString(signupRequest);
 
         mockMvc.perform(post(uri)
@@ -56,9 +57,9 @@ public class SignupControllerIntegrationTest {
     void shouldThrowErrorWhenExistingEmailIdIsProvidedForSignup() throws Exception {
 
         String uri = "/signup";
-        Account account = new Account("Latha","mouna@gmail.com","latha@123");
+        Account account = new Account("abc", "abc@gmail.com", "abc@123");
         accountRepository.save(account);
-        SignupRequest signupRequest = new SignupRequest("latha", "mouna@gmail.com", "lat@123");
+        SignupRequest signupRequest = new SignupRequest("abcd", "abc@gmail.com", "abc@123");
         String requestJson = new ObjectMapper().writeValueAsString(signupRequest);
 
         mockMvc.perform(post(uri)
