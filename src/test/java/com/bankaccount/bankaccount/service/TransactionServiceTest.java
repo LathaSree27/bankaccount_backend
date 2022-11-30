@@ -6,8 +6,11 @@ import com.bankaccount.bankaccount.model.Account;
 import com.bankaccount.bankaccount.model.Transaction;
 import com.bankaccount.bankaccount.repo.AccountRepository;
 import com.bankaccount.bankaccount.repo.TransactionRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -19,24 +22,18 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 public class TransactionServiceTest {
-
+    @Mock
     TransactionRepository transactionRepository;
+    @Mock
     AccountRepository accountRepository;
-    TransactionService transactionService;
-
+    @Mock
     TransactionStatement transactionStatement;
-
+    @Mock
     TransactionResponse transactionResponse;
-
-    @BeforeEach
-    public void beforeEach() {
-        transactionRepository = mock(TransactionRepository.class);
-        accountRepository = mock(AccountRepository.class);
-        transactionResponse = mock(TransactionResponse.class);
-        transactionStatement = mock(TransactionStatement.class);
-        transactionService = new TransactionService(transactionRepository, accountRepository);
-    }
+    @InjectMocks
+    TransactionService transactionService;
 
     @Test
     void shouldBeAbleToSaveCreditedAmount() {

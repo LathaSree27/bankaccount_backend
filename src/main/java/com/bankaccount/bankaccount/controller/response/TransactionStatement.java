@@ -15,7 +15,7 @@ import java.util.Objects;
 public class TransactionStatement {
     private long accountId;
     private String accountHolderName;
-    List<TransactionResponse> transactions = new ArrayList<>();
+    List<TransactionResponse> transactions;
     private BigDecimal balance;
 
     public TransactionStatement(long accountId, String accountHolderName, List<TransactionResponse> transactions, BigDecimal balance) {

@@ -4,6 +4,10 @@ import com.bankaccount.bankaccount.service.LoginPrincipalService;
 import com.bankaccount.bankaccount.service.TransactionService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.security.Principal;
@@ -11,22 +15,19 @@ import java.security.Principal;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 public class TransactionControllerTest {
 
+    @Mock
     TransactionService transactionService;
-    LoginPrincipalService loginPrincipalService;
+    @Mock
     Principal principal;
-
-    @BeforeEach
-    public void beforeEach() {
-        transactionService = mock(TransactionService.class);
-        principal = mock(Principal.class);
-    }
+    @InjectMocks
+    TransactionController transactionController;
 
     @Test
     void shouldBeAbleToCreditAmount() throws Exception {
         BigDecimal amount = BigDecimal.valueOf(2);
-        TransactionController transactionController = new TransactionController(transactionService);
         String email = "latha@gmail.com";
         when(principal.getName()).thenReturn(email);
 
@@ -38,7 +39,6 @@ public class TransactionControllerTest {
     @Test
     void shouldBeAbleToDebitAmount() throws Exception {
         BigDecimal amount = BigDecimal.valueOf(2);
-        TransactionController transactionController = new TransactionController(transactionService);
         String email = "latha@gmail.com";
         when(principal.getName()).thenReturn(email);
 
@@ -50,7 +50,6 @@ public class TransactionControllerTest {
     @Test
     void shouldBeAbleToFetchStatement() {
         String email = "latha@gmail.com";
-        TransactionController transactionController = new TransactionController(transactionService);
         when(principal.getName()).thenReturn(email);
 
         transactionController.statement(principal);
