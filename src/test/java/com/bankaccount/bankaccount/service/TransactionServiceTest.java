@@ -14,9 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.hamcrest.Matchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class TransactionServiceTest {
@@ -73,18 +73,18 @@ public class TransactionServiceTest {
         when(accountRepository.findByEmail(email)).thenReturn(Optional.of(account));
         long accountId = account.getId();
         List<Transaction> transactions = new ArrayList<>();
-        transactions.add(new Transaction("CREDIT",new BigDecimal(10),account));
-        transactions.add(new Transaction("DEBIT",new BigDecimal(5),account));
+        transactions.add(new Transaction("CREDIT", new BigDecimal(10), account));
+        transactions.add(new Transaction("DEBIT", new BigDecimal(5), account));
         when(transactionRepository.findByAccount_id(accountId)).thenReturn(transactions);
         List<TransactionResponse> transactionResponses = new ArrayList<>();
-        for(Transaction transaction : transactions){
-            transactionResponses.add(new TransactionResponse(transaction.getType(),transaction.getAmount()));
+        for (Transaction transaction : transactions) {
+            transactionResponses.add(TransactionResponse.builder().type(transaction.getType()).amount(transaction.getAmount()).build());
         }
-        TransactionStatement transactionStatement = new TransactionStatement(accountId, account.getName(), transactionResponses, account.getBalance());
+        TransactionStatement transactionStatement1 = TransactionStatement.builder().accountId(accountId).accountHolderName(account.getName()).transactions(transactionResponses).balance(account.getBalance()).build();
 
         TransactionStatement statement = transactionService.statement(email);
 
-        assertThat(transactionStatement,is(statement));
+        assertThat(transactionStatement1, is(statement));
         verify(transactionRepository).findByAccount_id(accountId);
     }
 }

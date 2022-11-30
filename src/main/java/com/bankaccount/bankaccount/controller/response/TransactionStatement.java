@@ -1,8 +1,7 @@
 package com.bankaccount.bankaccount.controller.response;
 
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
@@ -10,14 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-//@AllArgsConstructor
-@NoArgsConstructor
 @Setter
 @Getter
+@Builder
 public class TransactionStatement {
-    private long accountId ;
+    private long accountId;
     private String accountHolderName;
-    List<TransactionResponse> transactions = new ArrayList<>(0);
+    List<TransactionResponse> transactions = new ArrayList<>();
     private BigDecimal balance;
 
     public TransactionStatement(long accountId, String accountHolderName, List<TransactionResponse> transactions, BigDecimal balance) {

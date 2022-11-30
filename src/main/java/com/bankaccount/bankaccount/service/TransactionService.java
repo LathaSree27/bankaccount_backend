@@ -23,7 +23,6 @@ public class TransactionService {
         Account account = accountRepository.findByEmail(email).get();
         Transaction transaction = new Transaction("CREDIT", amount, account);
         transactionRepository.save(transaction);
-        System.out.println(account.getBalance());
         account.setBalance(account.getBalance().add(amount));
         accountRepository.save(account);
     }
@@ -32,7 +31,6 @@ public class TransactionService {
         Account account = accountRepository.findByEmail(email).get();
         Transaction transaction = new Transaction("DEBIT", amount, account);
         transactionRepository.save(transaction);
-        System.out.println(account.getBalance());
         account.setBalance(account.getBalance().subtract(amount));
         accountRepository.save(account);
     }
@@ -42,15 +40,15 @@ public class TransactionService {
         long accountId = account.getId();
         List<Transaction> transactions = transactionRepository.findByAccount_id(accountId);
         List<TransactionResponse> transactionResponses = getTransactionResponses(transactions);
-        TransactionStatement transactionStatement = new TransactionStatement(accountId,account.getName(),transactionResponses,account.getBalance());
+        TransactionStatement transactionStatement = TransactionStatement.builder().accountId(accountId).accountHolderName(account.getName()).transactions(transactionResponses).balance(account.getBalance()).build();
 
         return transactionStatement;
     }
 
     private static List<TransactionResponse> getTransactionResponses(List<Transaction> transactions) {
         List<TransactionResponse> transactionResponses = new ArrayList<>();
-        for(Transaction transaction : transactions){
-            transactionResponses.add(new TransactionResponse(transaction.getType(),transaction.getAmount()));
+        for (Transaction transaction : transactions) {
+            transactionResponses.add(TransactionResponse.builder().type(transaction.getType()).amount(transaction.getAmount()).build());
         }
         return transactionResponses;
     }
